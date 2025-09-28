@@ -35,6 +35,7 @@ Bài 4 Web đơn giản, bắt buộc sử dụng .NET Framework 2.0, sử dụn
 
 Cấu hình iss
 
-<img width="964" height="542" alt="image" src="https://github.com/user-attachments/assets/1f39146b-2b42-497c-88f1-a17c0ef61ea7" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1e8a75bf-9ae4-400d-92b1-75ce1911e31d" />
+
 
 
