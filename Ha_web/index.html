@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>VTW Proverbs - Web</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f4f8;
+            color: #222;
+            padding: 40px;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #1a1a8a;
+        }
+
+        input[type="text"] {
+            width: 60%;
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 8px 12px;
+            margin-left: 6px;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 12px;
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .sig {
+            color: #888;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>VTW Proverbs (Web)</h1>
+    <p>Nhập tên bạn (ví dụ: "Hà", "Thành", "vv") → bấm "Lấy châm ngôn".</p>
+
+    <div>
+        <input id="txtName" type="text" placeholder="Nhập tên..." />
+        <button id="btnGo">Lấy châm ngôn</button>
+    </div>
+
+    <div id="result" aria-live="polite"></div>
+    <div class="sig">~VTW Proverbs</div>
+
+    <script>
+    (function(){
+        var btn = document.getElementById('btnGo');
+        var txt = document.getElementById('txtName');
+        var out = document.getElementById('result');
+
+        function escapeForUrl(s){
+            return encodeURIComponent(s || '');
+        }
+
+        function showMessage(msg){
+            out.innerText = msg;
+        }
+
+        function callApi(name){
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'api.aspx', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState !== 4) return;
+                if(xhr.status === 200){
+                    try {
+                        var jo = JSON.parse(xhr.responseText);
+                        if(jo.proverb) showMessage(jo.proverb);
+                        else if(jo.error) showMessage('Lỗi: ' + jo.error);
+                        else showMessage('Không nhận được dữ liệu hợp lệ từ server.');
+                    } catch(e){
+                        showMessage('Phân tích JSON lỗi: ' + e.message);
+                    }
+                } else {
+                    showMessage('Yêu cầu thất bại. Status: ' + xhr.status);
+                }
+            };
+
+            var body = 'name=' + escapeForUrl(name);
+            xhr.send(body);
+        }
+
+        btn.addEventListener('click', function(){
+            var name = txt.value || '';
+            // tiền xử lý đơn giản client-side
+            name = name.replace(/[\r\n]+/g, ' ').trim();
+            if(name.length === 0){
+                showMessage('Vui lòng nhập tên.');
+                return;
+            }
+            showMessage('Đang lấy châm ngôn ...');
+            callApi(name);
+        });
+
+        // cho phép Enter
+        txt.addEventListener('keypress', function(e){
+            if(e.key === 'Enter' || e.keyCode === 13) { btn.click(); e.preventDefault(); }
+        });
+    })();
+    </script>
+</body>
+</html>
