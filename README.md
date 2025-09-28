@@ -33,4 +33,11 @@ Bài 4 Web đơn giản, bắt buộc sử dụng .NET Framework 2.0, sử dụn
 
  <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ed67ddcc-44c3-4708-9b18-963a29690938" />
 
+## web hiển thị dùng iss chạy 
+cũng cần phải add DLL vào api.aspx.cs và index.html là giao diện phía client 
+cấu hình iss ra sao 
+kết quả :
+
+<img width="964" height="542" alt="image" src="https://github.com/user-attachments/assets/1f39146b-2b42-497c-88f1-a17c0ef61ea7" />
+
 
